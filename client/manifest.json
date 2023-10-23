@@ -1,0 +1,60 @@
+{
+  "manifest_version": 3,
+  "name": "Jobrobo Chrome Extension",
+  "version": "1.0",
+  "description": "Automates the job search process",
+  "permissions": [
+    "activeTab",
+    "https://jobs.lever.co/spotify/*",
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://jobs.lever.co/spotify/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "128": "icon-128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://jobs.lever.co/spotify/",
+        "https://jobs.lever.co/spotify",
+        "https://jobs.lever.co/spotify?*"
+
+      ],
+      "js": [
+        "content.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://jobs.lever.co/spotify/*/apply"
+      ],
+      "js": [
+        "content_script_job_application_form.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://jobs.lever.co/spotify/*"
+      ],
+      "js": [
+        "content_script_job_link.js"
+      ],
+      "exclude_matches": [
+        "https://jobs.lever.co/spotify"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "128": "icon-128.png"
+  }
+}
