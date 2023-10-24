@@ -4,13 +4,14 @@
   "version": "1.0",
   "description": "Automates the job search process",
   "permissions": [
+    "http://localhost:5000/*",
     "activeTab",
-    "https://jobs.lever.co/spotify/*",
     "storage",
     "tabs",
     "scripting"
   ],
   "host_permissions": [
+    "http://localhost:5000/*",
     "https://jobs.lever.co/spotify/*"
   ],
   "action": {
@@ -20,17 +21,6 @@
     }
   },
   "content_scripts": [
-    {
-      "matches": [
-        "https://jobs.lever.co/spotify/",
-        "https://jobs.lever.co/spotify",
-        "https://jobs.lever.co/spotify?*"
-
-      ],
-      "js": [
-        "content.js"
-      ]
-    },
     {
       "matches": [
         "https://jobs.lever.co/spotify/*/apply"

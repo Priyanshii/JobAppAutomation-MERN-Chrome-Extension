@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #4d4a4a;
 }
 
 code {
@@ -13,7 +14,7 @@ code {
 }
 
 .popup{
-  width: 300px;
+  width: 500px;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -25,5 +26,61 @@ code {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin-top: 12px;
   gap: 4px;
+}
+
+.jobApplications {
+  margin: 10px 0px;
+  margin-top: 20px ;
+}
+
+.specificJob{
+  margin: 30px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+} 
+
+.questionTitle{
+  margin-left: 10px;
+  font-weight: 600;
+  font-size: medium;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.questionsArray{
+  margin: 0px 30px;
+}
+
+.applicationTitle{
+  font-weight: 600;
+  font-size: large;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.jobLink{
+  margin-left: 10px;
+}
+
+.title{
+  font-weight: 600;
+  font-size: medium;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.options{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
