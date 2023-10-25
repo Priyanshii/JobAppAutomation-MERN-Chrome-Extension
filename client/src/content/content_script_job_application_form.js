@@ -88,6 +88,20 @@ function fillingInputWithDefaultValues(inputType, inputName, element, inputEleme
     });
     selectElement.dispatchEvent(changeEvent);
 
+    //Detect New questions which appears after selecting from Location Dropdown.
+    const demographicQuestionsElements = document.querySelectorAll('[id*="countrySurvey"]');
+
+    if (demographicQuestionsElements.length > 0) {
+      demographicQuestionsElements.forEach(function (element) {
+        if (!element.classList.contains('hidden')) {
+          console.log(element);
+          //Process those questions
+        }
+      });
+    } else {
+      console.log("No elements found ");
+    }
+
   } else if (inputType === 'textarea') {
     textAreaElement.value = 'aaa';
   }
