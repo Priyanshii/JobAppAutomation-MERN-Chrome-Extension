@@ -31,6 +31,14 @@
     },
     {
       "matches": [
+        "https://jobs.lever.co/spotify/*/apply#"
+      ],
+      "js": [
+        "content_script_job_submit.js"
+      ]
+    },
+    {
+      "matches": [
         "https://jobs.lever.co/spotify/*"
       ],
       "js": [

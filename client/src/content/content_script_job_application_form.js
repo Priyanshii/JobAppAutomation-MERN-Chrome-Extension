@@ -52,11 +52,11 @@ function fillingInputWithDefaultValues(inputType, inputName, element, inputEleme
   if (inputElement) {
     if (inputType === 'text') {
 
-      inputElement.value = 'priya';
+      inputElement.value = 'bbcdd';
 
     } else if (inputType === 'email') {
 
-      inputElement.value = 'priya@gmail.com';
+      inputElement.value = 'bbcdd@gmail.com';
 
     } else if (inputType === 'checkbox') {
 
@@ -72,11 +72,11 @@ function fillingInputWithDefaultValues(inputType, inputName, element, inputEleme
     } else if (inputType === 'file') {
       const dataTransfer = new DataTransfer()
 
-      const file = new File(['Hello Worldddddd!'], 'resume.txt', { type: 'text/plain' })
+      const file = new File(['Hello World!'], 'bbcdd.txt', { type: 'text/plain' })
       dataTransfer.items.add(file)
       inputElement.files = dataTransfer.files;
       const selectFileLabel = element.querySelector('.default-label');
-      selectFileLabel.textContent = 'resume.txt'
+      selectFileLabel.textContent = 'bbcdd.txt'
     }
   } else if (inputType === 'dropdown') {
     selectElement.click();
@@ -88,14 +88,6 @@ function fillingInputWithDefaultValues(inputType, inputName, element, inputEleme
     });
     selectElement.dispatchEvent(changeEvent);
 
-    // for (let i = 0; i < selectElement.options.length; i++) {
-    //   const option = selectElement.options[i];
-
-    //   if (option.value.trim() !== '') {
-    //     option.selected = true;
-    //     break;
-    //   }
-    // }
   } else if (inputType === 'textarea') {
     textAreaElement.value = 'aaa';
   }
@@ -107,8 +99,17 @@ async function detectQuestionsOnCurrentPage() {
   let addtionalInfoInputType;
   let additionalInfoLabelText;
 
+  //Job Title
+  const jobTitleElement = document.querySelector('.posting-header h2');
+  let jobTitle;
+
+  if (jobTitleElement) {
+    jobTitle = jobTitleElement.textContent;
+  }
+
   const formElements = document.querySelectorAll('.application-form:not(.hidden)');
 
+  //Get Form Elements
   formElements.forEach(function (form) {
     const questionElement = form.querySelectorAll('.application-question');
     questionElements.push(...questionElement);
@@ -152,20 +153,33 @@ async function detectQuestionsOnCurrentPage() {
   // if (additionalInfoInputElement) {
   //   additionalInfoLabelText = additionalInfoInputElement.getAttribute('placeholder');
   // } 
-  
+
   // questions.push({
   //   text: additionalInfoLabelText,
   //   type: 'textarea',
   // })
 
-  console.log(questions);
-
-  chrome.runtime.sendMessage({ type: 'detectedJobApplicationQuestions', questions: questions }).then((response) => {
+  chrome.runtime.sendMessage({ type: 'detectedJobApplicationQuestions', questions: questions, title: jobTitle }).then((response) => {
     console.log("Questions on Job Url Sent!");
   });
-
-  const submitButton = document.getElementById('btn-submit');
-  await submitButton.click();
+  return;
 }
 
-detectQuestionsOnCurrentPage();
+async function main() {
+  try {
+    await detectQuestionsOnCurrentPage();
+    const submitButton = document.getElementById('btn-submit');
+
+    setTimeout(() => {
+      if (submitButton) {
+        submitButton.click();
+      }
+    }, 2000);
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
+main();

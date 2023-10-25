@@ -13,16 +13,160 @@ code {
     monospace;
 }
 
-.popup{
+.popup-main-container {
   width: 500px;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.popup-main-container p {
+  margin-top: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #414141;
+}
+
+.form-group {
+  margin-top: 10px;
+  margin-left: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 16px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.input-container label {
+  font-size: 14px;
+}
+
+.input-container input {
+  width: 200px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid #414141;
+}
+
+.input-container select {
+  width: 200px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: white;
+  border: 1px solid #414141;
+}
+
+.btn-default {
+  margin-top: 10px;
+  padding: 6px 12px;
+  color: white;
+  background-color: #0f7077;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.9px;
+}
+
+.btn-default:hover {
+  background-color: #135155;
+}
+
+.job-details-container {
+  margin-top: 20px;
+}
+
+.btn-primary {
+  margin-top: 10px;
+  padding: 4px 8px;
+  background-color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #0f7077;
+  text-decoration: underline;
+}
+
+.btn-primary:hover {
+  color: #0e3f42;
+}
+
+.job-applications-container {
+  padding: 0px 14px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 26px;
+}
+
+.job-card-container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
 }
 
-.question{
+.job-card-title {
+  margin-left: -10px;
+  font-weight: 500;
+  font-size: medium;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.job-link {
+  margin-top: 6px;
+  margin-left: 14px;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.job-questions-container {
+  margin: 0px 30px;
+}
+
+.questions-heading {
+  margin-left: 10px;
+  font-weight: 600;
+  font-size: medium;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.job-status {
+  font-weight: 500;
+  font-size: medium;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 4px;
+}
+
+.job-status span{
+  text-transform: capitalize;
+  color: #1f1d1d;
+  font-size: medium;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.question-card{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -30,53 +174,7 @@ code {
   gap: 4px;
 }
 
-.jobApplications {
-  margin: 10px 0px;
-  margin-top: 20px ;
-}
-
-.specificJob{
-  margin: 30px 0px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-} 
-
-.questionTitle{
-  margin-left: 10px;
-  font-weight: 600;
-  font-size: medium;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.questionsArray{
-  margin: 0px 30px;
-}
-
-.applicationTitle{
-  font-weight: 600;
-  font-size: large;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.jobLink{
-  margin-left: 10px;
-}
-
-.title{
-  font-weight: 600;
-  font-size: medium;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.options{
+.question-options {
   display: flex;
   flex-direction: row;
   gap: 10px;

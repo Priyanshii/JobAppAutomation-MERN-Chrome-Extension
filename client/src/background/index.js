@@ -5,6 +5,7 @@ let allLinks = [];
 let currentTabUrl = '';
 let jobApplicationsStatus = [];
 
+//Get Current tab url
 function updateCurrentTabUrl() {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     if (tabs[0]) {
@@ -31,12 +32,13 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     processLinks(sender.tab.id);
 
   } else if (message.type === "detectedJobApplicationQuestions") {
-    postJobApplicationQuestion(currentTabUrl, message.questions);
+    postJobApplicationQuestion(currentTabUrl, message.questions, message.title);
   }
   return true;
 });
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+  const jobLinkPattern = /^https:\/\/jobs\.lever\.co\/spotify\/[a-f0-9-]+$/i;
 
   if (tabId && tab.url) {
     if (tab.url.includes("apply#")) {
@@ -45,6 +47,10 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
           target: { tabId: tabId },
           files: ['content_script_job_submit.js']
         });
+      }
+    } else if (jobLinkPattern.test(tab.url)) {
+      if (changeInfo.status === "complete") {
+        chrome.tabs.sendMessage(tabId, { type: 'clickApplyButton' });
       }
     } else if (tab.url.includes("thanks")) {
       if (changeInfo.status === "complete") {
@@ -71,7 +77,8 @@ function processLinks(tabId) {
     const nextUrl = allLinks[currentIndex];
     currentTabUrl = nextUrl;
     chrome.tabs.update(tabId, { url: nextUrl })
-    currentIndex = currentIndex + 1;
+    currentIndex++;
+
   } else {
     batchUpdateJobApplicationStatus();
     console.log("All URLs processed");
@@ -79,6 +86,8 @@ function processLinks(tabId) {
 }
 
 //API Calls to server
+
+//Update Job Application Status in batches
 async function batchUpdateJobApplicationStatus() {
   console.log("inside batch Update Job Application Status");
   try {
@@ -103,7 +112,8 @@ async function batchUpdateJobApplicationStatus() {
   }
 }
 
-async function postJobApplicationQuestion(url, questions) {
+//post Job Application Questions with Title and url
+async function postJobApplicationQuestion(url, questions, title) {
   try {
     const response = await fetch('http://localhost:5000/api/job-application-details', {
       method: 'POST',
@@ -112,6 +122,7 @@ async function postJobApplicationQuestion(url, questions) {
       },
       body: JSON.stringify({
         url: url,
+        title: title,
         questions: questions,
       }),
     });
@@ -119,6 +130,7 @@ async function postJobApplicationQuestion(url, questions) {
       const data = await response.json();
       console.log(data);
     } else {
+      console.log(response);
       console.error('Request failed');
     }
   } catch (error) {

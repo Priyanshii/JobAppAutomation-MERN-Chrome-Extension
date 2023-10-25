@@ -11,16 +11,30 @@ export const getJobApplicationsDetails = async (req, res) => {
   }
 }
 
+export const getJobApplicationDetailsByUrl = async (req, res) => {
+  const { url } = req.query;
+  try {
+    const details = await JobApplication.findOne({ url });
+    console.log(details);
+    res.status(200).json({ data: details });
+
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+}
+
 export const postJobApplicationQuestions = async (req, res) => {
   try {
-    const { url, questions } = req.body;
-
+    const { url } = req.body;
     const existingObject = await JobApplication.findOne({ url });
 
     if (!existingObject) {
       const newObject = new JobApplication(req.body);
       await newObject.save();
-      res.json({ message: 'Object created successfully' });
+      res.status(201).json({ message: 'Object created successfully' });
+    }
+    else {
+      res.status(409).json({ message: 'Job Already Exists' });
     }
   } catch (error) {
     console.error(error);

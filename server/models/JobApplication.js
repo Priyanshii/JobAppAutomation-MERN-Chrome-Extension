@@ -6,6 +6,9 @@ const JobApplicationSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  title: {
+    type: String,
+  },
   questions: [{
     text: {
       type: String,

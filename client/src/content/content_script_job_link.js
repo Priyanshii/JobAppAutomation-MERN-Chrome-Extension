@@ -7,4 +7,8 @@ async function clickApplyButton() {
   chrome.runtime.sendMessage({ type: "applyButtonClicked" });
 }
 
-clickApplyButton();
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+  if (message.type === 'clickApplyButton') {
+    clickApplyButton();
+  }
+});
