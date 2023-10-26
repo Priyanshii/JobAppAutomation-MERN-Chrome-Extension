@@ -1,3 +1,5 @@
+const questions = [];
+
 //Find type attribute of the questions
 function findQuestionType(element, inputElement, selectElement, textAreaElement) {
   let inputType;
@@ -89,17 +91,19 @@ function fillingInputWithDefaultValues(inputType, inputName, element, inputEleme
     selectElement.dispatchEvent(changeEvent);
 
     //Detect New questions which appears after selecting from Location Dropdown.
-    const demographicQuestionsElements = document.querySelectorAll('[id*="countrySurvey"]');
+    const demographicQuestionsFormElements = document.querySelectorAll('[id*="countrySurvey"]');
+    let visibleDemographicQuestionsApplicationFormsElements = [];
 
-    if (demographicQuestionsElements.length > 0) {
-      demographicQuestionsElements.forEach(function (element) {
+    if (demographicQuestionsFormElements.length > 0) {
+      demographicQuestionsFormElements.forEach(function (element) {
         if (!element.classList.contains('hidden')) {
-          console.log(element);
-          //Process those questions
+          visibleDemographicQuestionsApplicationFormsElements.push(element);
         }
       });
+      getAllQuestionsOnFormElement(visibleDemographicQuestionsApplicationFormsElements)
+
     } else {
-      console.log("No elements found ");
+      console.log("No Demographic Questions Form Elements found ");
     }
 
   } else if (inputType === 'textarea') {
@@ -107,23 +111,9 @@ function fillingInputWithDefaultValues(inputType, inputName, element, inputEleme
   }
 }
 
-async function detectQuestionsOnCurrentPage() {
-  const questions = [];
+async function getAllQuestionsOnFormElement(formElements) {
   let questionElements = [];
-  let addtionalInfoInputType;
-  let additionalInfoLabelText;
 
-  //Job Title
-  const jobTitleElement = document.querySelector('.posting-header h2');
-  let jobTitle;
-
-  if (jobTitleElement) {
-    jobTitle = jobTitleElement.textContent;
-  }
-
-  const formElements = document.querySelectorAll('.application-form:not(.hidden)');
-
-  //Get Form Elements
   formElements.forEach(function (form) {
     const questionElement = form.querySelectorAll('.application-question');
     questionElements.push(...questionElement);
@@ -161,6 +151,22 @@ async function detectQuestionsOnCurrentPage() {
 
     fillingInputWithDefaultValues(inputType, inputName, element, inputElement, selectElement, textAreaElement);
   });
+}
+
+async function detectQuestionsOnCurrentPage() {
+
+  //Get Job Title
+  const jobTitleElement = document.querySelector('.posting-header h2');
+  let jobTitle;
+
+  if (jobTitleElement) {
+    jobTitle = jobTitleElement.textContent;
+  }
+
+  //Get Questions Form Elements
+  const formElements = document.querySelectorAll('.application-form:not(.hidden)');
+
+  getAllQuestionsOnFormElement(formElements);
 
   // const additionalInfoInputElement = document.getElementById('additional-information');
 
@@ -194,6 +200,5 @@ async function main() {
     console.error(error);
   }
 }
-
 
 main();
