@@ -4,6 +4,7 @@ let currentIndex;
 let allLinks = [];
 let currentTabUrl = '';
 let jobApplicationsStatus = [];
+const tabStates = {};
 
 //Get Current tab url
 function updateCurrentTabUrl() {
@@ -23,6 +24,9 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         target: { tabId: newTab.id },
         files: ['content.js']
       }, function () {
+        tabStates[newTab.id] = {
+          isAutomationStarted: true,
+        };
         chrome.tabs.sendMessage(newTab.id, { type: 'startAutomation', targetURL: targetURL, jobApplicationCount: message.jobApplicationCount });
       });
     });
@@ -50,7 +54,9 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
       }
     } else if (jobLinkPattern.test(tab.url)) {
       if (changeInfo.status === "complete") {
+        if (tabStates[tabId]?.isAutomationStarted) {
         chrome.tabs.sendMessage(tabId, { type: 'clickApplyButton' });
+        }
       }
     } else if (tab.url.includes("thanks")) {
       if (changeInfo.status === "complete") {
@@ -65,6 +71,10 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
       }
     }
   }
+});
+
+chrome.tabs.onRemoved.addListener((tabId) => {
+  delete tabStates[tabId];
 });
 
 //Process Each Link in the array
